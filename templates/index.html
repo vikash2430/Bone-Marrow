@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Survival Rate Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        button {
+            background-color: #0056b3;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #004494;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Survival Rate Form</h1>
+        <form id="survivalForm">
+            <label for="patientName">Patient Name:</label>
+            <input type="text" id="patientName" name="patientName" required>
+            
+            <label for="patientAge">Patient Age (1-100):</label>
+            <input type="number" id="patientAge" name="patientAge" min="1" max="100" required>
+            
+            <label for="donorAge">Donor Age (1-100):</label>
+            <input type="number" id="donorAge" name="donorAge" min="1" max="100" required>
+            
+            <label for="timeToAGvHD">Time to aGvHD (in days):</label>
+            <input type="number" id="timeToAGvHD" name="timeToAGvHD" min="1" required>
+            
+            <label for="recipientABO">Recipient ABO (Percentage 1-100):</label>
+            <input type="number" id="recipientABO" name="recipientABO" min="1" max="100" required>
+            
+            <label for="patientGender">Patient Gender:</label>
+            <select id="patientGender" name="patientGender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            
+            <label for="disease">Disease:</label>
+            <select id="disease" name="disease" required>
+                <option value="acute">Acute</option>
+                <option value="chronic">Chronic</option>
+            </select>
+            
+            <button type="button" onclick="calculateSurvivalRate()">Calculate Survival Rate</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateSurvivalRate() {
+            const patientAge = parseInt(document.getElementById("patientAge").value);
+            const donorAge = parseInt(document.getElementById("donorAge").value);
+            const timeToAGvHD = parseInt(document.getElementById("timeToAGvHD").value);
+            const recipientABO = parseInt(document.getElementById("recipientABO").value);
+            const disease = document.getElementById("disease").value;
+
+            // Calculate survival rate based on inputs (example logic)
+            let survivalRate = 100; // Base survival rate
+            survivalRate -= (patientAge + donorAge) * 0.1; // Age penalty
+            survivalRate -= timeToAGvHD * 0.2; // Time to aGvHD penalty
+            survivalRate += recipientABO * 0.3; // ABO compatibility boost
+
+            if (disease === "chronic") {
+                survivalRate -= 15; // Chronic disease penalty
+            }
+
+            survivalRate = Math.max(0, Math.min(100, survivalRate)); // Ensure survival rate is between 0-100%
+
+            document.getElementById("result").textContent = `Estimated Survival Rate: ${survivalRate.toFixed(2)}%`;
+        }
+    </script>
+</body>
+</html>
