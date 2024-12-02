@@ -3,7 +3,7 @@ import joblib
 import numpy as np
 
 # Load the trained model using joblib
-model_path = "C:/Users/User/render-demo/best_model1.pkl" # Make sure the model file is in the correct path
+model_path = r"C:\Users\User\render-demo\best_model1.pkl"  # Corrected path
 model = joblib.load(model_path)
 
 app = Flask(__name__)
