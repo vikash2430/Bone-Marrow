@@ -1,9 +1,16 @@
 from flask import Flask, request, render_template
 import joblib
 import numpy as np
+import os
 
 # Load the trained model using joblib
-model_path = r"C:\Users\User\render-demo\best_model1.pkl"  # Corrected path
+# Use relative path to ensure it works across environments (local and deployed)
+model_path = os.path.join(os.path.dirname(__file__), 'best_model1.pkl')  # Assuming the model is in the same directory as app.py
+
+# Ensure the model file exists
+if not os.path.exists(model_path):
+    raise FileNotFoundError(f"Model file not found at: {model_path}")
+
 model = joblib.load(model_path)
 
 app = Flask(__name__)
